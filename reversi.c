@@ -6,16 +6,9 @@
  *
  */
 
-// DO NOT REMOVE THE FOLLOWING LINE
-#if !defined(TESTER_P1) && !defined(TESTER_P2)
-// DO NOT REMOVE THE ABOVE LINE
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
-
-// DO NOT REMOVE THE FOLLOWING LINE
-#endif
-// DO NOT REMOVE THE ABOVE LINE
 
 void initializeBoard(char board[][26], int n)
 {
@@ -430,7 +423,6 @@ int makeMove(char board[][26], int n, char turn, int *row, int *col)
     return 0;
 }
 
-// REMOVE
 bool search(char board[][26], int n, char turn)
 {
     for (int boardRow = 0; boardRow < n; boardRow++) // looping through main grid
@@ -489,53 +481,6 @@ int getScore(char board[][26], char colour, int n)
 
     return score;
 }
-
-void searchAI(char board[][26], int n, char turn, int *row, int *col)
-{
-    // Find best move using score AI
-    int maxFlips = 0;
-    for (int boardRow = 0; boardRow < n; boardRow++) // looping through main grid
-    {
-        for (int boardCol = 0; boardCol < n; boardCol++)
-        {
-            if (board[boardRow][boardCol] == 'U') // Potential legal move square
-            {
-                int flips = 0;
-                for (int adjacentRow = boardRow - 1; adjacentRow <= boardRow + 1; adjacentRow++) // checking all the squares adjacent to potential square
-                {
-                    for (int adjacentCol = boardCol - 1; adjacentCol <= boardCol + 1; adjacentCol++)
-                    {
-                        if (emptyLegalInDirection(board, n, boardRow, boardCol, turn, adjacentRow - boardRow, adjacentCol - boardCol)) // if legal move
-                        {
-                            int currentRow = adjacentRow;
-                            int currentCol = adjacentCol;
-
-                            while (board[currentRow][currentCol] != turn)
-                            {
-                                currentRow += adjacentRow - boardRow;
-                                currentCol += adjacentCol - boardCol;
-                                flips++;
-                            }
-                        }
-                    }
-                }
-
-                if (flips > maxFlips)
-                {
-                    maxFlips = flips;
-                    *row = boardRow;
-                    *col = boardCol;
-                }
-            }
-        }
-    }
-}
-
-//*******************************************************
-// Note: Please only put your main function below
-// DO NOT REMOVE THE FOLLOWING LINE
-#ifndef TESTER_P2
-// DO NOT REMOVE THE ABOVE LINE
 
 int main(void)
 {
@@ -732,8 +677,3 @@ int main(void)
 
     return 0;
 }
-
-// DO NOT REMOVE THE FOLLOWING LINE
-#endif
-// DO NOT REMOVE THE ABOVE LINE
-//*******************************************************
