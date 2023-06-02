@@ -7,7 +7,8 @@
             "args": [
                 "-fdiagnostics-color=always",
                 "-g",
-                "${file}",
+                //"${file}", // if you want to compile individual files
+                "${fileDirname}\\**.cpp", // if you want to link multiple files
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe"
             ],
