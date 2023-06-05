@@ -110,6 +110,22 @@ bool isTileEmpty(char gameBoard[BOARD_SIZE][BOARD_SIZE], int row, int col)
     return true;
 }
 
+bool isGameOver(char board[BOARD_SIZE][BOARD_SIZE])
+{
+    for (int i = 0; i < BOARD_SIZE; i++)
+    {
+        for (int j = 0; j < BOARD_SIZE; j++)
+        {
+            if (isTileEmpty(board, i, j))
+            {
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
 bool isEmptyTileLegalInDirection(char board[BOARD_SIZE][BOARD_SIZE], char player, int row, int col, int dx, int dy)
 {
     /*Checking if legal move is available in direction from an empty tile*/
@@ -227,7 +243,7 @@ bool isValidMoveNotEmptyTile(char gameBoard[BOARD_SIZE][BOARD_SIZE], char player
 
     for (int i = 0; i < 8; i++)
     {
-        if (isPositionInBounds(row, col) && isTileEmpty(gameBoard, row, col) && isNotEmptyTileLegalInDirection(gameBoard, player, row, col, DIRECTIONS[i][0], DIRECTIONS[i][1]))
+        if (isPositionInBounds(row, col) && !isTileEmpty(gameBoard, row, col) && isNotEmptyTileLegalInDirection(gameBoard, player, row, col, DIRECTIONS[i][0], DIRECTIONS[i][1]))
         {
             return true;
         }
@@ -244,30 +260,101 @@ void placeTile(char board[BOARD_SIZE][BOARD_SIZE], char playerColor)
     int col{}; // From col 0 - 7
 
     // Get input from user
-    std::cout << "Where do you want to place your tile ([row] [col]): ";
+    std::cout << "Where do you want to place your " << playerColor << " tile ([row] [col]): ";
     std::cin >> row >> col;
 
     // Check if input is in bounds
+    while (!isValidMoveEmptyTile(board, playerColor, row, col))
+    {
+        std::cout << "Invalid move. Where do you want to place your tile ([row] [col]): ";
+        std::cin >> row >> col;
+    }
+
     board[row][col] = playerColor;
+}
+
+bool isPlayerMovePossible(char board[BOARD_SIZE][BOARD_SIZE], char player)
+{
+    for (int i = 0; i < BOARD_SIZE; i++)
+    {
+        for (int j = 0; j < BOARD_SIZE; j++)
+        {
+            if (board[i][j] == player)
+            {
+                if (isValidMoveNotEmptyTile(board, player, i, j))
+                {
+                    return true;
+                }
+            }
+        }
+    }
+
+    return false;
+}
+
+int getScore(char board[BOARD_SIZE][BOARD_SIZE], char player)
+{
+    int score{};
+
+    for (int i = 0; i < BOARD_SIZE; i++)
+    {
+        for (int j = 0; j < BOARD_SIZE; j++)
+        {
+            if (board[i][j] == player)
+            {
+                score++;
+            }
+        }
+    }
+
+    return score;
+}
+
+void switchPlayerTurn(bool *playerOneTurn, bool *playerTwoTurn)
+{
+    /*Switches the player turn by passing in  booleans by reference*/
+
+    if (*playerOneTurn)
+    {
+        *playerTwoTurn = true;
+        *playerOneTurn = false;
+    }
+    else if (*playerTwoTurn)
+    {
+        *playerOneTurn = true;
+        *playerTwoTurn = false;
+    }
 }
 
 int main()
 {
-
-    int row{5};
-    int col{2};
-
     char gameBoard[BOARD_SIZE][BOARD_SIZE]{};
+    bool playerOne = true;
+    bool playerTwo = false;
 
+    std::cout << "Black makes the first move.\n";
     initializeBoard(gameBoard);
-
     printBoard(gameBoard);
+    std::cout << isGameOver(gameBoard) << "\n";
 
-    placeTile(gameBoard, WHITE);
+    do
+    {
+        if (playerOne && isPlayerMovePossible(gameBoard, BLACK))
+        {
+            placeTile(gameBoard, BLACK);
+            printBoard(gameBoard);
+            switchPlayerTurn(&playerOne, &playerTwo);
+        }
+        else if (playerTwo && isPlayerMovePossible(gameBoard, WHITE))
+        {
+            placeTile(gameBoard, WHITE);
+            printBoard(gameBoard);
+            switchPlayerTurn(&playerOne, &playerTwo);
+        }
+        std::cout << isGameOver(gameBoard) << "\n";
+    } while (!isGameOver(gameBoard));
 
-    printBoard(gameBoard);
-
-    std::cout << isValidMoveEmptyTile(gameBoard, WHITE, row, col) << "\n";
+    std::cout << getScore(gameBoard, EMPTY) << "\n";
 
     return 0;
 }
