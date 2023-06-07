@@ -38,14 +38,37 @@ void printGraphicalBoard()
 void printBoard(char board[BOARD_SIZE][BOARD_SIZE])
 {
     /*Prints out array*/
-    for (int i = 0; i < BOARD_SIZE; i++)
+    std::cout << " ";
+
+    for (int i = -1; i < BOARD_SIZE; i++)
     {
-        for (int j = 0; j < BOARD_SIZE; j++)
+        for (int j = -1; j < BOARD_SIZE; j++)
         {
-            std::cout << board[i][j] << " ";
+            // Prints out column numbers
+            if (i == -1)
+            {
+                // Fixes bug of printing out 1 - 9 instead of 1 - 8
+                if (j == BOARD_SIZE - 1)
+                {
+                    continue;
+                }
+                std::cout << "   " << j + 2;
+            }
+            // Prints out row numbers and grid style
+            else if (j == -1)
+            {
+                std::cout << "  +---+---+---+---+---+---+---+---+\n";
+                std::cout << i + 1 << " |";
+            }
+            // Prints out board pieces with grid formatting
+            else
+            {
+                std::cout << " " << board[i][j] << " |";
+            }
         }
-        std::cout << "\n";
+        std::cout << "\n"; // New line after each row is printed
     }
+    std::cout << "  +---+---+---+---+---+---+---+---+\n"; // Last grid row formatting
 }
 
 void initializeBoard(char gameBoard[BOARD_SIZE][BOARD_SIZE])
