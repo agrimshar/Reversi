@@ -5,35 +5,9 @@
 const int BOARD_SIZE = 8;
 const char WHITE{'W'};
 const char BLACK{'B'};
-const char EMPTY{'-'};
+const char EMPTY{' '};
 const char VALID{'O'};
 const int DIRECTIONS[8][2]{{-1, -1}, {0, -1}, {1, -1}, {-1, 0}, {1, 0}, {-1, 1}, {0, 1}, {1, 1}};
-
-#ifndef n
-void printGraphicalBoard()
-{
-    /*Prints out game board*/
-
-    printf("    1   2   3   4   5   6   7   8\n");
-    printf("  +---+---+---+---+---+---+---+---+\n");
-    printf("1 |   |   |   |   |   |   |   |   |\n");
-    printf("  +---+---+---+---+---+---+---+---+\n");
-    printf("2 |   |   |   |   |   |   |   |   |\n");
-    printf("  +---+---+---+---+---+---+---+---+\n");
-    printf("3 |   |   |   |   |   |   |   |   |\n");
-    printf("  +---+---+---+---+---+---+---+---+\n");
-    printf("4 |   |   |   |   |   |   |   |   |\n");
-    printf("  +---+---+---+---+---+---+---+---+\n");
-    printf("5 |   |   |   |   |   |   |   |   |\n");
-    printf("  +---+---+---+---+---+---+---+---+\n");
-    printf("6 |   |   |   |   |   |   |   |   |\n");
-    printf("  +---+---+---+---+---+---+---+---+\n");
-    printf("7 |   |   |   |   |   |   |   |   |\n");
-    printf("  +---+---+---+---+---+---+---+---+\n");
-    printf("8 |   |   |   |   |   |   |   |   |\n");
-    printf("  +---+---+---+---+---+---+---+---+\n");
-}
-#endif
 
 void printBoard(char board[BOARD_SIZE][BOARD_SIZE])
 {
