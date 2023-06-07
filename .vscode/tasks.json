@@ -7,8 +7,10 @@
             "args": [
                 "-fdiagnostics-color=always",
                 "-g",
-                //"${file}", // if you want to compile individual files
-                "${fileDirname}\\**.cpp", // if you want to link multiple files
+                "${workspaceFolder}\\*.cpp",
+                "${workspaceFolder}\\debug\\*.cpp",
+                "${workspaceFolder}\\logic\\*.cpp",
+                "${workspaceFolder}\\ui\\*.cpp",
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe"
             ],
