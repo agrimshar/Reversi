@@ -3,6 +3,7 @@
 #include "gameFlow.h"
 
 #include <iostream>
+#include <limits>
 
 void printBoard(char board[constants::BOARD_SIZE][constants::BOARD_SIZE])
 {
@@ -60,6 +61,9 @@ void placeTile(char board[constants::BOARD_SIZE][constants::BOARD_SIZE], char pl
     // Check if input is in bounds (-1 because player enters number from 1 - 8, not 0 - 7)
     while (!isValidMoveEmptyTile(board, playerColor, *row, *col))
     {
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
         std::cout << "Invalid move. Where do you want to place your tile ([row] [col]): ";
         std::cin >> *row >> *col;
 
