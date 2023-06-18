@@ -1,5 +1,7 @@
 #include "welcome.h"
 #include "playGame.h"
+#include "instructions.h"
+#include "credits.h"
 
 #include <iostream>
 #include <cstdio>
@@ -49,13 +51,13 @@ void introMessage()
         playGame();
         break;
     case 2:
-        // playAi();
+        // ai
         break;
     case 3:
-        // instructions();
+        instructions();
         break;
     case 4:
-        // credits();
+        credits();
         break;
     case 5:
         exit(0);

@@ -13,7 +13,6 @@ int main()
 {
 
     mainScreen();
-    playGame();
 
     return 0;
 }
